@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<style>
+	input {
+		color: green;
+	}
+	::placeholder {
+		color: red;
+	}
+	th {
+	align: center;
+	}
+	
+	#status {
+	text-align: center;
+	color: brown;
+	}
+	
+	caption {
+	color: blue;
+	}
+	
+</style>
+
+</head>
+<body>
+
+<div [ngSwitch]="option" id="status">
+<span *ngSwitchCase="0">Flightticket Booked Successfully</span>
+<span *ngSwitchCase="1">Flightticket booking Deleted Successfully </span>
+<span *ngSwitchCase="2">Flightticket booking Updated Successfully</span>
+</div>
+
+
+<table border="1">
+	<caption>Book a Flightticket</caption>
+	<tr>
+		<td>Flight ID: </td>
+		<td><input [(ngModel)]='id' type="text"/></td>
+	</tr>
+		
+	<tr>
+		<td>Flight Name: </td>
+		<td><input [(ngModel)]='name' type="text"/></td>
+	</tr>
+	
+	<tr>
+		<td>Flightticket Price: </td>
+		<td><input [(ngModel)]='price' type="text"/></td>
+	</tr>
+	
+	<tr>
+		<td>Flight Source:</td>
+		<td><input [(ngModel)]='source' type="text"/></td>
+	</tr>
+	
+	<tr>
+		<td>Flight Destination:</td>
+		<td><input [(ngModel)]='destination' type="text"/></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td>Flight Date:</td>
+		<td><input [(ngModel)]='date' type="text"/></td>
+	</tr>
+	
+	<tr>
+		<td colspan="2" align="center"><button (click)='addFlight(id, name, price, source, destination, date)'>Book Flight</button></td>
+	</tr>
+	
+</table>
+
+<br><br>
+
+
+<table border="2">
+<caption>List of Flights</caption>
+<tr>
+<th><button (click)='sortById()'>  Flight ID  </button></th>
+<th><button (click)='sortByName()'>Flight Name</button></th>
+<th><button (click)='sortByPrice()'>Ticket Price</button></th>
+<th><button (click)='sortBySource()'>Flight Source</button></th>
+<th><button (click)='sortByDestination()'>Flight Destination</button></th>
+<th><button (click)='sortByDate()'>Flight Date</button></th>
+<th rowspan="2">Update</th>
+<th rowspan="2">Delete</th>
+</tr>
+
+<tr>
+<td><input (focus)='changeIndexToOne()' [value]='search' (input)='sea=$event.target.value' placeholder="Filter by Id"></td>
+<td><input (focus)='changeIndexToTwo()' [value]='search' (input)='sea=$event.target.value' placeholder="Filter by Name"></td>
+<td><input (focus)='changeIndexToThree()' [value]='search' (input)='sea=$event.target.value' placeholder="Filter by Price"></td>
+<td><input (focus)='changeIndexToFour()' [value]='search' (input)='sea=$event.target.value' placeholder="Filter by Source"></td>
+<td><input (focus)='changeIndexToFive()' [value]='search' (input)='sea=$event.target.value' placeholder="Filter by Destination"></td>
+<td><input (focus)='changeIndexToSix()' [value]='search' (input)='sea=$event.target.value' placeholder="Filter by Date"></td>
+
+
+</tr>
+
+<tr *ngFor="let flight of flights |searchPipe:sea:index" >
+<td>{{flight.id}}</td>
+<td>{{flight.name}}</td>
+<td>{{flight.price | currency:'USD': true}}</td>
+<td>{{flight.source}}</td>
+<td>{{flight.destination}}</td>
+<td>{{flight.date}}</td>
+<td><button (click)='showFlight(flight.id)'>Update</button></td>
+<td><button (click)='deleteFlight(flight.id)'>Delete</button></td>
+</tr>
+
+</table>
+
+<div>
+<br><br>
+
+<table border="1">
+<caption>Update Flight</caption>
+
+	<tr>
+		<td>Flight ID:</td>
+		<td><input readonly [(ngModel)]='newId' type="text"/></td>
+	</tr>
+		
+	<tr>
+		<td>Flight Name:</td>
+		<td><input [(ngModel)]='newName' type="text"/></td>
+	</tr>
+	
+	<tr>
+		<td>Ticket Price:</td>
+		<td><input [(ngModel)]='newPrice' type="text"/></td>
+	</tr>
+	
+	<tr>
+		<td>Flight Source:</td>
+		<td><input [(ngModel)]='newSource' type="text"/></td>
+	</tr>
+	
+	<tr>
+		<td>Flight Destination:</td>
+		<td><input [(ngModel)]='newDestination' type="text"/></td>
+	</tr>
+	
+	
+	<tr>
+		<td>Flight Date:</td>
+		<td><input [(ngModel)]='newDate' type="text"/></td>
+	</tr>
+	
+	<tr>
+		<td colspan="2" align="center"><button (click)='updateFlight(newId, newName, newPrice, newSource, newDestination, newDate)'>Update Flight</button></td>
+	</tr>
+</table>
+</div>
+
+
+</body>
+</html>
